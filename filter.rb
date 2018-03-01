@@ -21,10 +21,7 @@ while output.length < ARGV[1].to_i
     $browser.find_elements(xpath: "//div[@role='article']").each do |el|
       if el.attribute('textContent').downcase.include? ARGV[0].downcase
         url = "https://www.facebook.com/"+el.find_element(xpath: ".//input[@name='ft_ent_identifier']").attribute('value')
-        if !output.include? url
-          output << url
-          p output #show current urls
-        end
+        output << url if !output.include? url
       end
     end
     $browser.execute_script("window.scrollBy(0, window.innerHeight)")
@@ -35,6 +32,7 @@ while output.length < ARGV[1].to_i
   print "restarting browser... "
 end
 
+p output #show collected urls
 homepage(output[0],0)
 output.each_with_index do |s,index| 
   $browser.execute_script("window.open(\"#{s}\")") if index!=0
