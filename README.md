@@ -8,7 +8,7 @@ exemplary usages:
 
 ruby filter.rb konkurs https://fb.com/ 2 200
 
-ruby filter.rb kraków https://www.facebook.com/sledzimykonkursy/ 3 1000
+ruby filter.rb 'w krakowie' https://www.facebook.com/sledzimykonkursy/ 3 1000
 
 
 
