@@ -1,6 +1,5 @@
-#usage: ruby filter.rb <search_term> <results_quantity>
-#exemplary usage: ruby filter.rb konkurs 5 
-#requirements: ruby, selenium-webdriver gem, geckodriver in PATH, firefox with saved fb password
+
+
 require 'selenium-webdriver'
 
 def homepage(link,hide)
@@ -14,10 +13,10 @@ end
 
 output = []
 puts "lets look for #{ARGV[0]}..."
-while output.length < ARGV[1].to_i
+while output.length < ARGV[2].to_i
   i=0
-  homepage("https://www.facebook.com",1)
-  while i<100 && (output.length < ARGV[1].to_i)
+  homepage(ARGV[1],1)
+  while i<ARGV[3].to_i && (output.length < ARGV[2].to_i)
     $browser.find_elements(xpath: "//div[@role='article']").each do |el|
       if el.attribute('textContent').downcase.include? ARGV[0].downcase
         url = "https://www.facebook.com/"+el.find_element(xpath: ".//input[@name='ft_ent_identifier']").attribute('value')
@@ -26,7 +25,7 @@ while output.length < ARGV[1].to_i
     end
     $browser.execute_script("window.scrollBy(0, window.innerHeight)")
     i+=1
-    print (100-i).to_s+", " #show how many scrolls left to browser restart
+    print (ARGV[3].to_i-i).to_s+", " #show how many scrolls left to browser restart
   end
   $browser.quit
   print "restarting browser... "
