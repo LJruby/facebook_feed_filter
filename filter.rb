@@ -1,5 +1,3 @@
-
-
 require 'selenium-webdriver'
 
 def homepage(link,hide)
