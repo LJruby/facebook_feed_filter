@@ -13,6 +13,7 @@ def homepage(link,hide)
 end
 
 output = []
+puts "lets look for #{ARGV[0]}..."
 while output.length < ARGV[1].to_i
   i=0
   homepage("https://www.facebook.com",1)
@@ -31,8 +32,7 @@ while output.length < ARGV[1].to_i
     print (100-i).to_s+", " #show how many scrolls left to browser restart
   end
   $browser.quit
-  print "restarting... "
-  sleep(3)
+  print "restarting browser... "
 end
 
 homepage(output[0],0)
