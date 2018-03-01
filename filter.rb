@@ -12,7 +12,6 @@ def homepage(link,hide)
   $browser.get link
 end
 
-i=0
 output = []
 while output.length < ARGV[1].to_i
   i=0
@@ -33,6 +32,7 @@ while output.length < ARGV[1].to_i
   end
   $browser.quit
   print "restarting... "
+  sleep(3)
 end
 
 homepage(output[0],0)
