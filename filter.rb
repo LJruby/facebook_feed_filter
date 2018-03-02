@@ -10,12 +10,13 @@ def homepage(link,hide)
 end
 
 output = []
+min_data_insertion_position = 0
 puts "lets look for #{ARGV[0]}..."
 while output.length < ARGV[2].to_i
   i = 0
   homepage(ARGV[1],1)
   while i < ARGV[3].to_i && output.length < ARGV[2].to_i
-    $browser.find_elements(xpath: "//div[@role='article' and .//input[contains(@name,'ft_ent_identifier')]]").each do |el|
+    $browser.find_elements(xpath: "//div[@role='article' and .//input[contains(@name,'ft_ent_identifier')] and @data-insertion-position>=#{min_data_insertion_position}]").each do |el|
       if !(el.attribute('textContent') =~ /#{ARGV[0]}/i).nil? && output.length < ARGV[2].to_i
         url = "https://www.facebook.com/"+el.find_element(xpath: ".//input[@name='ft_ent_identifier']").attribute('value')
         if !output.include? url
@@ -23,6 +24,7 @@ while output.length < ARGV[2].to_i
           print "current results: #{output}, "
         end
       end
+      min_data_insertion_position += 1
     end
     $browser.execute_script("window.scrollBy(0, window.innerHeight)")
     i += 1
