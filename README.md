@@ -1,6 +1,6 @@
 usage:
 
-ruby filter.rb <search_term> <some_facebook_page> <results_quantity> <scrolls_quantity>
+ruby filter.rb <search_term> <some_facebook_page> <results_quantity> <scrolls_till_browser_restarts>
 
 
 
