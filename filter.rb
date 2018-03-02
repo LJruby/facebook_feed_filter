@@ -18,7 +18,10 @@ while output.length < ARGV[2].to_i
     $browser.find_elements(xpath: "//div[@role='article' and .//input[contains(@name,'ft_ent_identifier')]]").each do |el|
       if !(el.attribute('textContent') =~ /#{ARGV[0]}/i).nil? && output.length < ARGV[2].to_i
         url = "https://www.facebook.com/"+el.find_element(xpath: ".//input[@name='ft_ent_identifier']").attribute('value')
-        output << url if !output.include? url
+        if !output.include? url
+          output << url 
+          print "current results: #{output}, "
+        end
       end
     end
     $browser.execute_script("window.scrollBy(0, window.innerHeight)")
@@ -29,7 +32,6 @@ while output.length < ARGV[2].to_i
   $browser.quit
 end
 
-p output #show collected urls
 homepage(output[0],0)
 output.each_with_index do |s,index| 
   $browser.execute_script("window.open(\"#{s}\")") if index != 0
