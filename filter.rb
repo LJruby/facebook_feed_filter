@@ -25,8 +25,8 @@ while output.length < ARGV[2].to_i
     i += 1
     print (ARGV[3].to_i-i).to_s+", " #show how many scrolls left to browser restart
   end
-  $browser.quit
   print "restarting browser... "
+  $browser.quit
 end
 
 p output #show collected urls

@@ -1,7 +1,7 @@
 usage:  
 ruby filter.rb <case_insensitive_regex_search_term> <some_facebook_page> <results_quantity> <scrolls_till_browser_restarts>  
   
-exemples:  
+examples:  
 ruby filter.rb Youtube https://fb.com/ 3 100  
 ruby filter.rb 'piwo|wódka|wino' https://facebook.com/ 1 100  
 ruby filter.rb '(?=.*Duda)(?=.*Andrzej)' https://www.fb.com/ 1 100  
