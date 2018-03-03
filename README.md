@@ -9,3 +9,4 @@ ruby filter.rb 'wygraJ bileT' https://www.facebook.com/sledzimykonkursy/ 2 1000
   
 requirements:  
 ruby, selenium-webdriver gem, geckodriver in PATH, firefox with saved fb password  
+ 

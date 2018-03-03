@@ -12,10 +12,10 @@ end
 output = []
 data_insertion_position = 0
 puts "lets look for #{ARGV[0]}..."
-while output.length < ARGV[2].to_i
+begin
   i = 0
   homepage(ARGV[1],1)
-  while i < ARGV[3].to_i && output.length < ARGV[2].to_i
+  begin
     $browser.find_elements(xpath: "//div[@role='article' and .//input[contains(@name,'ft_ent_identifier')] and @data-insertion-position>=#{data_insertion_position}]").each do |el|
       if !(el.attribute('textContent') =~ /#{ARGV[0]}/i).nil? && output.length < ARGV[2].to_i
         url = "https://www.facebook.com/"+el.find_element(xpath: ".//input[@name='ft_ent_identifier']").attribute('value')
@@ -29,10 +29,10 @@ while output.length < ARGV[2].to_i
     $browser.execute_script("window.scrollBy(0, window.innerHeight)")
     i += 1
     print (ARGV[3].to_i-i).to_s+", " #show how many scrolls left to browser restart
-  end
+  end while i < ARGV[3].to_i && output.length < ARGV[2].to_i
   print "current results: #{output}, restarting browser... "
   $browser.quit
-end
+end while output.length < ARGV[2].to_i && (ARGV[1] =~ /[.]com\/.+/i).nil?
 
 homepage(output[0],0)
 output.each_with_index do |s,index| 
