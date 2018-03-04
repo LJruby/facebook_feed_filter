@@ -5,8 +5,8 @@ def homepage(link,hide)
   options = Selenium::WebDriver::Firefox::Options.new(profile: default_profile)
   options.add_argument('--headless') if hide == 1 #hide UI, faster
   $browser = Selenium::WebDriver.for :firefox, options: options
+  $browser.manage.timeouts.implicit_wait = ARGV[4].to_f
   $browser.manage.window.maximize
-  $browser.manage.timeouts.implicit_wait = 0.3
   $browser.get link
 end
 
