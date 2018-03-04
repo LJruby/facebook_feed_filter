@@ -6,17 +6,20 @@ def homepage(link,hide)
   options.add_argument('--headless') if hide == 1 #hide UI, faster
   $browser = Selenium::WebDriver.for :firefox, options: options
   $browser.manage.window.maximize
+  $browser.manage.timeouts.implicit_wait = 0.3
   $browser.get link
 end
 
 output = []
-data_insertion_position = 0
-puts "lets look for #{ARGV[0]}..."
+print "lets look for \"#{ARGV[0]}\", scrolls left/posts parsed: "
 begin
   i = 0
+  data_insertion_position = 0
   homepage(ARGV[1],1)
   begin
-    $browser.find_elements(xpath: "//div[@role='article' and .//input[contains(@name,'ft_ent_identifier')] and @data-insertion-position>=#{data_insertion_position}]").each do |el|
+    print "#{(ARGV[3].to_i-i).to_s}/#{data_insertion_position}, "
+    $browser.execute_script("window.scrollBy(0, 200)")
+    $browser.find_elements(xpath: "//div[@data-insertion-position>=#{data_insertion_position}]").each do |el|
       if !(el.attribute('textContent') =~ /#{ARGV[0]}/i).nil? && output.length < ARGV[2].to_i
         url = "https://www.facebook.com/"+el.find_element(xpath: ".//input[@name='ft_ent_identifier']").attribute('value')
         if !output.include? url
@@ -26,15 +29,15 @@ begin
       end
       data_insertion_position += 1
     end
-    $browser.execute_script("window.scrollBy(0, window.innerHeight)")
     i += 1
-    print (ARGV[3].to_i-i).to_s+", " #show how many scrolls left to browser restart
   end while i < ARGV[3].to_i && output.length < ARGV[2].to_i
-  print "current results: #{output}, restarting browser... "
+  puts "current results: #{output}, restarting browser... "
   $browser.quit
 end while output.length < ARGV[2].to_i && (ARGV[1] =~ /[.]com\/.+/i).nil?
 
-homepage(output[0],0)
-output.each_with_index do |s,index| 
-  $browser.execute_script("window.open(\"#{s}\")") if index != 0
+if !output.empty?
+  homepage(output[0],0)
+  output.each_with_index do |s,index| 
+    $browser.execute_script("window.open(\"#{s}\")") if index != 0
+  end
 end
