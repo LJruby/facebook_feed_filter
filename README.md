@@ -5,7 +5,7 @@ par1 - case insensitive regex search term
 par2 - some facebook page  
 par3 - results desired quantity  
 par4 - 200px scrolls amount before browser restarts at https://www.facebook.com  
-par5 - seconds till single lookups timeout (more accurate seach, the bigger the value should be)  
+par5 - seconds till single lookups timeout (more accurate search - slower, the bigger the value should be, 0.3 should be good in most of the cases)  
   
 examples:  
 ruby filter.rb Youtube https://fb.com/ 3 1000 0.3  
